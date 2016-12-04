@@ -1,8 +1,16 @@
 <resources>
-    <string name="app_name">How\'s the Weather</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="app_name">How\'s the Weather?</string>
+    <string name="action_change_city">Alterar cidade</string>
+    <string name="lorem_ipsum">Lorem ipsum</string>
+    <string name="nunc_ipsum_risus_porttitor">Nunc ipsum risus porttitor</string>
+    <string name="temperature">00 ºC</string>
+    <string name="humidity">Umidade: 00%</string>
+    <string name="pressure">Pressão: 0000 mbar</string>
+    <string name="wind">Vento: 00 km/h</string>
+    <string name="image_description">Ilustração das condições do clima</string>
+    <string name="forecast_today">Previsão do tempo para hoje</string>
+    <string name="forecast_next_days">Previsão para os próximos dias</string>
+    <string name="powered_by">Informações disponibilizadas por MyWeather2.com</string>
+    <string name="max_day">Máxima durante o dia:</string>
+    <string name="min_night">Mínima durante a noite:</string>
 </resources>

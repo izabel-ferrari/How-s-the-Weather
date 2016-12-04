@@ -3,11 +3,9 @@ package pcs3614.howstheweather.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Samsung on 03/12/2016.
- */
 
 public class Constants {
+    /* ------------------------------------------- API ------------------------------------------ */
     // Informações sobre a API e seus parâmetros
     // http://www.myweather2.com/developer/apis.aspx?uref=becda844-8299-4bf6-899b-d771a92b9dbf
 
@@ -15,7 +13,6 @@ public class Constants {
     private static final String URL_BASE = "http://www.myweather2.com/developer/forecast.ashx?";
 
     // PARÂMETROS
-
     // Código de acesso
     private static final String UAC = "mOZe06wPPC";
     // Tipo de retorno
@@ -28,7 +25,12 @@ public class Constants {
     // REQUISIÇÃO
     public static final String URL = URL_BASE + "uac=" + UAC + "&output=" + OUTPUT + "&temp_unit=" + TEMP_UNIT + "&ws_unit" + WS_UNIT + "&query=";
 
-    // CIDADES E SUAS COORDENADAS NO FORMATO LAT,LONG
+    /* ------------------------------------------------------------------------------------------ */
+
+    public static final String CIDADE_DEFAULT = "São Paulo - SP";
+
+    public static final String BROADCAST_WEATHER = "BROADCAST_WEATHER";
+
     public static final Map<String, String> CIDADES;
 
     static {
@@ -62,4 +64,76 @@ public class Constants {
         CIDADES.put("Vitória - ES", "-20.319,-40.337");
     }
 
+    public static final Map<String, String> MESES;
+
+    static {
+        MESES = new HashMap<String, String>();
+        MESES.put("01", "janeiro");
+        MESES.put("02", "fevereiro");
+        MESES.put("03", "março");
+        MESES.put("04", "abril");
+        MESES.put("05", "maio");
+        MESES.put("06", "junho");
+        MESES.put("07", "julho");
+        MESES.put("08", "agosto");
+        MESES.put("09", "setembro");
+        MESES.put("10", "outubro");
+        MESES.put("11", "novembro");
+        MESES.put("12", "dezembro");
+    }
+
+    public static final Map<String, String> DESCRICAO;
+
+    static {
+        DESCRICAO = new HashMap<String, String>();
+        DESCRICAO.put("-999", "N/A");
+        DESCRICAO.put("0", "Céu limpo");
+        DESCRICAO.put("1", "Céu parcialmente nublado");
+        DESCRICAO.put("2", "Céu nublado");
+        DESCRICAO.put("3", "Céu encoberto");
+        DESCRICAO.put("10", "Neblina");
+        DESCRICAO.put("21", "Possibilidade de chuvas esparsas");
+        DESCRICAO.put("22", "Possibilidade de neve");
+        DESCRICAO.put("23", "Possibilidade de granizo");
+        DESCRICAO.put("24", "Possibilidade de  garoa");
+        DESCRICAO.put("29", "Pancadas de chuva");
+        DESCRICAO.put("38", "Neve");
+        DESCRICAO.put("39", "Nevasca");
+        DESCRICAO.put("45", "Nevoeiro");
+        DESCRICAO.put("49", "Nevoeiro");
+        DESCRICAO.put("50", "Garoa");
+        DESCRICAO.put("51", "Garoa leve");
+        DESCRICAO.put("56", "Garoa intensa");
+        DESCRICAO.put("57", "Garoa intensa");
+        DESCRICAO.put("60", "Possibilidade de chuvas leves");
+        DESCRICAO.put("61", "Chuva leve");
+        DESCRICAO.put("62", "Pancadas de chuva moderadas");
+        DESCRICAO.put("63", "Chuva moderada");
+        DESCRICAO.put("64", "Pancadas de chuva forte");
+        DESCRICAO.put("65", "Chuva forte");
+        DESCRICAO.put("66", "Chuva congelante leve");
+        DESCRICAO.put("67", "Chuva congelante moderada");
+        DESCRICAO.put("68", "Granizo leve");
+        DESCRICAO.put("69", "Granizo moderado ou forte");
+        DESCRICAO.put("70", "Possibilidade de neve");
+        DESCRICAO.put("71", "Neve leve");
+        DESCRICAO.put("72", "Possibilidade de neve moderada");
+        DESCRICAO.put("73", "Neve moderada");
+        DESCRICAO.put("74", "Possibilidade de neve forte");
+        DESCRICAO.put("75", "Neve forte");
+        DESCRICAO.put("79", "Granizo");
+        DESCRICAO.put("80", "Chuva leve");
+        DESCRICAO.put("81", "Chuvas moderadas ou fortes");
+        DESCRICAO.put("82", "Tempestades");
+        DESCRICAO.put("83", "Granizo leve");
+        DESCRICAO.put("84", "Granizo moderado ou forte");
+        DESCRICAO.put("85", "Neve leve");
+        DESCRICAO.put("86", "Neve moderada ou forte");
+        DESCRICAO.put("87", "Granizo");
+        DESCRICAO.put("88", "Granizo moderado ou forte");
+        DESCRICAO.put("91", "Possibilidade de chuvas com trovoadas");
+        DESCRICAO.put("92", "Chuvas moderadas ou fortes com trovoadas");
+        DESCRICAO.put("93", "Possibilidade de neve com trovoadas");
+        DESCRICAO.put("94", "Neve moderada ou forte com trovoadas");
+    }
 }

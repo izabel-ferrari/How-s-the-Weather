@@ -1,9 +1,12 @@
 
 package pcs3614.howstheweather.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
-public class Forecast {
+public class Forecast implements Parcelable{
 
     private String date;
     private Day day;
@@ -46,4 +49,40 @@ public class Forecast {
     public String getTempUnit() {
         return tempUnit;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(date);
+        parcel.writeParcelable(day, i);
+        parcel.writeString(dayMaxTemp);
+        parcel.writeParcelable(night, i);
+        parcel.writeString(nightMinTemp);
+        parcel.writeString(tempUnit);
+    }
+
+    Forecast(Parcel in) {
+        date = in.readString();
+        day = in.readParcelable(Day.class.getClassLoader());
+        dayMaxTemp = in.readString();
+        night = in.readParcelable(Night.class.getClassLoader());
+        nightMinTemp = in.readString();
+        tempUnit = in.readString();
+    }
+
+    public static final Parcelable.Creator<Forecast> CREATOR = new Parcelable.Creator<Forecast>() {
+        @Override
+        public Forecast createFromParcel(Parcel in) {
+            return new Forecast(in);
+        }
+
+        @Override
+        public Forecast[] newArray(int size) {
+            return new Forecast[size];
+        }
+    };
 }

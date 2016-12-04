@@ -1,39 +1,99 @@
 package pcs3614.howstheweather.Activities;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import pcs3614.howstheweather.Models.Forecast;
+import pcs3614.howstheweather.Models.Weather;
 import pcs3614.howstheweather.R;
+import pcs3614.howstheweather.Utils.Constants;
+import pcs3614.howstheweather.Utils.Formatting;
 import pcs3614.howstheweather.WebServices.WebServiceRequest;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private String currentLocation = Constants.CIDADE_DEFAULT;
+    private Context context;
+    private Weather weather;
+    private Forecast forecast;
+    ProgressDialog progressDialog;
+
+    Toolbar toolbar;
+    View cell_today, cell_tomorrow, cell_after_tomorrow;
+
+    TextView textHeaderToday, textTemperatureToday, textDescriptionToday, textHumidityToday, textPressureToday, textWindToday;
+    ImageView imageWeatherToday;
+
+    TextView textHeaderTomorrow, textTemperatureDayTomorrow, textDescriptionDayTomorrow, textTemperatureNightTomorrow, textDescriptionNightTomorrow;
+    ImageView imageWeatherDayTomorrow, imageWeatherNightTomorrow;
+
+    TextView textHeaderAfterTomorrow, textTemperatureDayAfterTomorrow, textDescriptionAfterTomorrow, textTemperatureNightAfterTomorrow, textDescriptionNightAfterTomorrow;
+    ImageView imageWeatherDayAfterTomorrow, imageWeatherNightAfterTomorrow;
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            weather = intent.getParcelableExtra("weather");
+            populate();
+            progressDialog.dismiss();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(currentLocation);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        cell_today = findViewById(R.id.include_cell_today);
+        cell_tomorrow = findViewById(R.id.include_cell_tomorrow);
+        cell_after_tomorrow = findViewById(R.id.include_cell_after_tomorrow);
+
+        textHeaderToday = (TextView) cell_today.findViewById(R.id.text_header);
+        imageWeatherToday = (ImageView) cell_today.findViewById(R.id.image_weather);
+        textTemperatureToday = (TextView) cell_today.findViewById(R.id.text_temperature);
+        textDescriptionToday = (TextView) cell_today.findViewById(R.id.text_description);
+        textHumidityToday = (TextView) cell_today.findViewById(R.id.text_humidity);
+        textPressureToday = (TextView) cell_today.findViewById(R.id.text_pressure);
+        textWindToday = (TextView) cell_today.findViewById(R.id.text_wind);
+
+        textHeaderTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_header);
+        imageWeatherDayTomorrow = (ImageView) cell_tomorrow.findViewById(R.id.image_weather_day);
+        textTemperatureDayTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_temperature_day);
+        textDescriptionDayTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_description_day);
+        imageWeatherNightTomorrow = (ImageView) cell_tomorrow.findViewById(R.id.image_weather_night);
+        textTemperatureNightTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_temperature_night);
+        textDescriptionNightTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_description_night);
+
+        textHeaderAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_header);
+        imageWeatherDayAfterTomorrow = (ImageView) cell_after_tomorrow.findViewById(R.id.image_weather_day);
+        textTemperatureDayAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_temperature_day);
+        textDescriptionAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_description_day);
+        imageWeatherNightAfterTomorrow = (ImageView) cell_after_tomorrow.findViewById(R.id.image_weather_night);
+        textTemperatureNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_temperature_night);
+        textDescriptionNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_description_night);
 
         WebServiceRequest webServiceRequest = new WebServiceRequest();
-        webServiceRequest.getForecast("São Paulo - SP");
+        webServiceRequest.getForecast(context, Constants.CIDADE_DEFAULT);
+
+        progressDialog = ProgressDialog.show(context, null, "Carregando...");
 
     }
 
@@ -50,12 +110,52 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // TODO Colocar ação de mudar cidade
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver, new IntentFilter(Constants.BROADCAST_WEATHER));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);
+    }
+
+    private void populate() {
+        if (weather != null) {
+            textHeaderToday.setText(Formatting.getCurrentDate());
+            imageWeatherToday.setImageResource(Formatting.getDayIcon(weather.getCurrenWeather().getWeatherCode()));
+            textTemperatureToday.setText(Formatting.getTemperature(weather.getCurrenWeather().getTemp()));
+            textDescriptionToday.setText(Formatting.getDescription(weather.getCurrenWeather().getWeatherCode()));
+            textHumidityToday.setText(Formatting.getHumidity(weather.getCurrenWeather().getHumidity()));
+            textPressureToday.setText(Formatting.getPressure(weather.getCurrenWeather().getPressure()));
+            textWindToday.setText(Formatting.getWind(weather.getCurrenWeather().getWind().getSpeed()));
+
+            forecast = weather.getForecastList().get(0);
+            textHeaderTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            imageWeatherDayTomorrow.setImageResource(Formatting.getDayIcon(forecast.getDay().getWeatherCode()));
+            textTemperatureDayTomorrow.setText(Formatting.getTemperature(forecast.getDayMaxTemp()));
+            textDescriptionDayTomorrow.setText(Formatting.getDescription(forecast.getDay().getWeatherCode()));
+            imageWeatherNightTomorrow.setImageResource(Formatting.getNightIcon(forecast.getNight().getWeatherCode()));
+            textTemperatureNightTomorrow.setText(Formatting.getTemperature(forecast.getNightMinTemp()));
+            textDescriptionNightTomorrow.setText(Formatting.getDescription(forecast.getNight().getWeatherCode()));
+
+            forecast = weather.getForecastList().get(1);
+            textHeaderAfterTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            imageWeatherDayAfterTomorrow.setImageResource(Formatting.getDayIcon(forecast.getDay().getWeatherCode()));
+            textTemperatureDayAfterTomorrow.setText(Formatting.getTemperature(forecast.getDayMaxTemp()));
+            textDescriptionAfterTomorrow.setText(Formatting.getDescription(forecast.getDay().getWeatherCode()));
+            imageWeatherNightAfterTomorrow.setImageResource(Formatting.getNightIcon(forecast.getNight().getWeatherCode()));
+            textTemperatureNightAfterTomorrow.setText(Formatting.getTemperature(forecast.getNightMinTemp()));
+            textDescriptionNightAfterTomorrow.setText(Formatting.getDescription(forecast.getNight().getWeatherCode()));
+        }
     }
 }

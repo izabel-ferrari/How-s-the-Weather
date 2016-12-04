@@ -1,10 +1,12 @@
 
 package pcs3614.howstheweather.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
-
-public class CurrenWeather {
+public class CurrenWeather implements Parcelable {
 
     private String humidity;
     private String pressure;
@@ -52,4 +54,42 @@ public class CurrenWeather {
     public Wind getWind() {
         return wind;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(humidity);
+        parcel.writeString(pressure);
+        parcel.writeString(temp);
+        parcel.writeString(tempUnit);
+        parcel.writeString(weatherCode);
+        parcel.writeString(weatherText);
+        parcel.writeParcelable(wind, i);
+    }
+
+    CurrenWeather(Parcel in) {
+        humidity = in.readString();
+        pressure = in.readString();
+        temp = in.readString();
+        tempUnit = in.readString();
+        weatherCode = in.readString();
+        weatherText = in.readString();
+        wind = in.readParcelable(Wind.class.getClassLoader());
+    }
+
+    public static final Creator<CurrenWeather> CREATOR = new Creator<CurrenWeather>() {
+        @Override
+        public CurrenWeather createFromParcel(Parcel in) {
+            return new CurrenWeather(in);
+        }
+
+        @Override
+        public CurrenWeather[] newArray(int size) {
+            return new CurrenWeather[size];
+        }
+    };
 }

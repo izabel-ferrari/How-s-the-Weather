@@ -1,9 +1,12 @@
 
 package pcs3614.howstheweather.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
-public class Night {
+public class Night implements Parcelable {
 
     private String weatherCode;
     private String weatherText;
@@ -27,4 +30,35 @@ public class Night {
     public Wind getWind() {
         return wind;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(weatherCode);
+        parcel.writeString(weatherText);
+        parcel.writeParcelable(wind, i);
+    }
+
+    Night(Parcel in) {
+        weatherCode = in.readString();
+        weatherText = in.readString();
+        wind = in.readParcelable(Wind.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Night> CREATOR = new Parcelable.Creator<Night>() {
+        @Override
+        public Night createFromParcel(Parcel in) {
+            return new Night(in);
+        }
+
+        @Override
+        public Night[] newArray(int size) {
+            return new Night[size];
+        }
+    };
+
 }

@@ -1,5 +1,7 @@
 package pcs3614.howstheweather.WebServices;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -20,20 +22,17 @@ import org.json.JSONObject;
 import pcs3614.howstheweather.Models.Weather;
 import pcs3614.howstheweather.Utils.Constants;
 
-/**
- * Created by Izabel on 03/12/2016.
- */
-
 public class WebServiceRequest {
 
+    private Context context;
     private static final String TAG = "WebServiceRequest";
 
-    public void getForecast(final String cidade) {
+    public void getForecast(final Context ct, final String cidade) {
+        this.context = ct;
         new AsyncTask<String, Void, String>() {
             @Override
             protected void onPreExecute() {
-                Log.d(TAG, "onPreExecute: ");
-                //mDialog = ProgressDialog.show(MainActivity.this,"Load in progress", "Wait ...", true, true);
+                // Log.d(TAG, "onPreExecute: ");
             }
 
             @Override
@@ -49,21 +48,20 @@ public class WebServiceRequest {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONObject jsonWeather = jsonObject.optJSONObject("weather");
                     weather = new Weather(jsonWeather);
-                    Log.d(TAG, "onPostExecute: " + weather.toString());
+                    // Log.d(TAG, "onPostExecute: " + weather.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                mVideosAdapter = new VideosListAdapter(MainActivity.this, videos);
-//                mVideosLv.setAdapter(mVideosAdapter);
-//                // dismiss progress dialog
-//                Utils.dismissDialog(mDialog);
+                Intent intent = new Intent(Constants.BROADCAST_WEATHER);
+                intent.putExtra("weather", weather);
+                context.sendBroadcast(intent);
             }
 
         }.execute();
     }
 
     private String requestContent(String url) {
-        Log.d(TAG, "requestContent: " + url);
+        // Log.d(TAG, "requestContent: " + url);
         HttpClient httpClient = new DefaultHttpClient();
         String result = null;
         HttpGet httpGet = new HttpGet(url);

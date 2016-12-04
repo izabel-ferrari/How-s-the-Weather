@@ -1,6 +1,9 @@
 
 package pcs3614.howstheweather.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Weather {
+public class Weather implements Parcelable{
 
     private CurrenWeather currenWeather;
     private List<Forecast> forecastList = new ArrayList<Forecast>();
@@ -38,4 +41,32 @@ public class Weather {
     public List<Forecast> getForecastList() {
         return forecastList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(currenWeather, i);
+        parcel.writeTypedList(forecastList);
+    }
+
+    Weather(Parcel in) {
+        currenWeather = in.readParcelable(CurrenWeather.class.getClassLoader());
+        in.readTypedList(forecastList, Forecast.CREATOR);
+    }
+
+    public static final Creator<Weather> CREATOR = new Creator<Weather>() {
+        @Override
+        public Weather createFromParcel(Parcel in) {
+            return new Weather(in);
+        }
+
+        @Override
+        public Weather[] newArray(int size) {
+            return new Weather[size];
+        }
+    };
 }
