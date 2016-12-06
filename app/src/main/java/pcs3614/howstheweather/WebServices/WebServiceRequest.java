@@ -44,13 +44,15 @@ public class WebServiceRequest {
             @Override
             protected void onPostExecute(String response) {
                 Weather weather = null;
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONObject jsonWeather = jsonObject.optJSONObject("weather");
-                    weather = new Weather(jsonWeather);
-                    // Log.d(TAG, "onPostExecute: " + weather.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONObject jsonWeather = jsonObject.optJSONObject("weather");
+                        weather = new Weather(jsonWeather);
+                        // Log.d(TAG, "onPostExecute: " + weather.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 Intent intent = new Intent(Constants.BROADCAST_WEATHER);
                 intent.putExtra("weather", weather);

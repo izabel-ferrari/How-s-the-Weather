@@ -1,13 +1,18 @@
 package pcs3614.howstheweather.Activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -48,9 +53,14 @@ public class MainActivity extends AppCompatActivity {
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            weather = intent.getParcelableExtra("weather");
-            populate();
-            progressDialog.dismiss();
+            if (intent.getParcelableExtra("weather") != null) {
+                weather = intent.getParcelableExtra("weather");
+                populate();
+                progressDialog.dismiss();
+            } else {
+                progressDialog.dismiss();
+                showNoInternetDialog();
+            }
         }
     };
 
@@ -97,8 +107,11 @@ public class MainActivity extends AppCompatActivity {
         textTemperatureNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_temperature_night);
         textDescriptionNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_description_night);
 
-        getForecast(cidadeStr);
-
+        if (isNetworkAvailable()) {
+            getForecast(cidadeStr);
+        } else {
+            showNoInternetDialog();
+        }
     }
 
     @Override
@@ -131,6 +144,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(receiver);
+    }
+
+    private void showNoInternetDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Sem conexão à internet")
+                .setMessage("Verifique sua conexão e tente novamente.")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void getForecast(String cidade) {
