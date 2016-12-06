@@ -6,6 +6,10 @@ import android.os.Parcelable;
 
 import org.json.JSONObject;
 
+import pcs3614.howstheweather.R;
+import pcs3614.howstheweather.Utils.Constants;
+import pcs3614.howstheweather.Utils.Formatting;
+
 public class CurrenWeather implements Parcelable {
 
     private String humidity;
@@ -84,6 +88,90 @@ public class CurrenWeather implements Parcelable {
             return (new Wind());
         }
         return wind;
+    }
+
+    public String getEstadoHeader() {
+        switch (getEstado()) {
+            case Constants.ESTADO_INDISPONIVEL:
+                return Constants.ESTADO_INDISPONIVEL_HEADER;
+            case Constants.ESTADO_IDEAL:
+                return Constants.ESTADO_IDEAL_HEADER;
+            case Constants.ESTADO_ATENCAO:
+                return Constants.ESTADO_ATENCAO_HEADER;
+            case Constants.ESTADO_ALERTA:
+                return Constants.ESTADO_ALERTA_HEADER;
+            case Constants.ESTADO_EMERGENCIA:
+                return Constants.ESTADO_EMERGENCIA_HEADER;
+        }
+        return (Constants.ESTADO_INDISPONIVEL_HEADER);
+    }
+
+    public String getEstadoDescrip() {
+        return (Formatting.getEstadoDescripFormatted(getEstado(), getTemp(), getHumidity()));
+    }
+
+    private int getEstado() {
+        String umidadeStr = this.getHumidity();
+        String temperaturaStr = this.getTemp();
+
+        int umidade = -1;
+        int temperatura = -1;
+
+        if (umidadeStr.contains("-") || temperaturaStr.contains("-")) {
+            return (Constants.ESTADO_INDISPONIVEL);
+        }
+
+        umidade = Integer.parseInt(umidadeStr);
+        temperatura = Integer.parseInt(temperaturaStr);
+
+        if (umidade > 30) {
+            if (temperatura >= 22 && temperatura <= 27) {
+                return Constants.ESTADO_IDEAL;
+            }
+            if (temperatura < 22 || (temperatura > 27 && temperatura <= 30)) {
+                return Constants.ESTADO_ATENCAO;
+            }
+            if (temperatura > 30) {
+                return Constants.ESTADO_ATENCAO;
+            }
+        }
+        if (umidade > 20 && umidade <= 30) {
+            if (temperatura >= 22 && temperatura <= 27) {
+                return Constants.ESTADO_ATENCAO;
+            }
+            if (temperatura < 22 || (temperatura > 27 && temperatura <= 30)) {
+                return Constants.ESTADO_ATENCAO;
+            }
+            if (temperatura > 30) {
+                return Constants.ESTADO_ALERTA;
+            }
+
+        }
+        if (umidade >= 12 && umidade <= 20) {
+            if (temperatura >= 22 && temperatura <= 27) {
+                return Constants.ESTADO_ALERTA;
+            }
+            if (temperatura < 22 || (temperatura > 27 && temperatura <= 30)) {
+                return Constants.ESTADO_ALERTA;
+            }
+            if (temperatura > 30) {
+                return Constants.ESTADO_EMERGENCIA;
+            }
+
+        }
+        if (umidade < 12) {
+            if (temperatura >= 22 && temperatura <= 27) {
+                return Constants.ESTADO_EMERGENCIA;
+            }
+            if (temperatura < 22 || (temperatura > 27 && temperatura <= 30)) {
+                return Constants.ESTADO_EMERGENCIA;
+            }
+            if (temperatura > 30) {
+                return Constants.ESTADO_EMERGENCIA;
+            }
+
+        }
+        return (Constants.ESTADO_INDISPONIVEL);
     }
 
     @Override

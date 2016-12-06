@@ -1,20 +1,27 @@
 <resources>
     <string name="app_name">How\'s the Weather?</string>
+
     <string name="action_change_city">Alterar cidade</string>
+    <string name="selecione_cidade">Selecione uma cidade</string>
+
     <string name="lorem_ipsum">Lorem ipsum</string>
     <string name="nunc_ipsum_risus_porttitor">Nunc ipsum risus porttitor</string>
-    <string name="temperature">00 ºC</string>
-    <string name="humidity">Umidade: 00%</string>
-    <string name="pressure">Pressão: 0000 mbar</string>
-    <string name="wind">Vento: 00 km/h</string>
-    <string name="image_description">Ilustração das condições do clima</string>
+    <string name="vivamus_tincidunt">Vivamus tincidunt</string>
+    <string name="phasellus_ante_libero">Phasellus ante libero, finibus sed arcu eu, pretium tincidunt lectus. Sed nec accumsan dui. Phasellus et justo ac est sagittis dictum. Morbi nec leo congue, accumsan lectus quis, varius ex. Duis sodales dolor vitae nulla.</string>
+
     <string name="forecast_today">Previsão do tempo para hoje</string>
     <string name="forecast_next_days">Previsão para os próximos dias</string>
     <string name="powered_by">Informações disponibilizadas por MyWeather2.com</string>
+
     <string name="max_day">Máxima durante o dia:</string>
     <string name="min_night">Mínima durante a noite:</string>
     <string name="amanha">Amanhã</string>
     <string name="depois_amanha">Depois de amanhã</string>
-    <string name="vivamus_tincidunt">Vivamus tincidunt</string>
-    <string name="selecione_cidade">Selecione uma cidade</string>
+
+    <string name="temperature">00 ºC</string>
+    <string name="humidity">Umidade: 00%</string>
+    <string name="pressure">Pressão: 0000 hPa</string>
+    <string name="wind">Vento: 00 km/h</string>
+
+    <string name="image_description">Ilustração das condições do clima</string>
 </resources>

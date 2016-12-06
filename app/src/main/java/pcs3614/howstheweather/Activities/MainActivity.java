@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pcs3614.howstheweather.Models.Forecast;
@@ -31,10 +32,13 @@ import pcs3614.howstheweather.WebServices.WebServiceRequest;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private boolean isVisible = false;
+
     private String cidadeStr;
     private Context context;
     private Weather weather;
     private Forecast forecast;
+
     ProgressDialog progressDialog;
     Activity activity = this;
 
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textHeaderToday, textTemperatureToday, textDescriptionToday, textHumidityToday, textPressureToday, textWindToday;
     ImageView imageWeatherToday;
+
+    LinearLayout layout_estado_atual;
+    TextView estado_atual_header, estado_atual_descrip;
 
     TextView textHeaderTomorrow, textTemperatureDayTomorrow, textDescriptionDayTomorrow, textTemperatureNightTomorrow, textDescriptionNightTomorrow;
     ImageView imageWeatherDayTomorrow, imageWeatherNightTomorrow;
@@ -91,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         textPressureToday = (TextView) cell_today.findViewById(R.id.text_pressure);
         textWindToday = (TextView) cell_today.findViewById(R.id.text_wind);
 
+        layout_estado_atual = (LinearLayout) cell_today.findViewById(R.id.layout_estado_atual);
+        estado_atual_header = (TextView) cell_today.findViewById(R.id.text_estado_atual_header);
+        estado_atual_descrip = (TextView) cell_today.findViewById(R.id.text_estado_descrip);
+
         textHeaderTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_header);
         imageWeatherDayTomorrow = (ImageView) cell_tomorrow.findViewById(R.id.image_weather_day);
         textTemperatureDayTomorrow = (TextView) cell_tomorrow.findViewById(R.id.text_temperature_day);
@@ -112,6 +123,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             showNoInternetDialog();
         }
+
+        cell_today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isVisible) {
+                    layout_estado_atual.setVisibility(View.GONE);
+                    isVisible = false;
+                } else {
+                    layout_estado_atual.setVisibility(View.VISIBLE);
+                    isVisible = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -180,6 +204,9 @@ public class MainActivity extends AppCompatActivity {
             textHumidityToday.setText(Formatting.getHumidity(weather.getCurrenWeather().getHumidity()));
             textPressureToday.setText(Formatting.getPressure(weather.getCurrenWeather().getPressure()));
             textWindToday.setText(Formatting.getWind(weather.getCurrenWeather().getWind().getSpeed()));
+
+            estado_atual_header.setText(weather.getCurrenWeather().getEstadoHeader());
+            estado_atual_descrip.setText(weather.getCurrenWeather().getEstadoDescrip());
 
             forecast = weather.getForecastList().get(0);
             //textHeaderTomorrow.setText(Formatting.getDate(forecast.getDate()));

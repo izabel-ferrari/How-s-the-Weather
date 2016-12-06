@@ -33,6 +33,24 @@ public class Constants {
 
     public static final String BROADCAST_WEATHER = "BROADCAST_WEATHER";
 
+    public static final int ESTADO_INDISPONIVEL = 0;
+    public static final int ESTADO_IDEAL = 1;
+    public static final int ESTADO_ATENCAO = 2;
+    public static final int ESTADO_ALERTA = 3;
+    public static final int ESTADO_EMERGENCIA = 4;
+
+    public static final String ESTADO_INDISPONIVEL_HEADER = "";
+    public static final String ESTADO_IDEAL_HEADER = "Estado ideal";
+    public static final String ESTADO_ATENCAO_HEADER = "Estado de atenção";
+    public static final String ESTADO_ALERTA_HEADER = "Estado de alerta";
+    public static final String ESTADO_EMERGENCIA_HEADER = "Estado de emergência";
+
+    public static final String ESTADO_INDISPONIVEL_DESCRIP = "Informações não disponíveis.";
+    public static final String ESTADO_IDEAL_DESCRIP = "exercícios físicos ao ar livre são totalmente recomendados. Não se esqueça de hidratar-se frequentemente e utilizar roupas leves.";
+    public static final String ESTADO_ATENCAO_DESCRIP = "sugere-se que exercícios físicos ao ar livre entre 11 e 15 horas sejam evitados. Sempre que possível, permaneça em locais protegidos do sol, em áreas vegetadas ou afins. Recomenda-se que cerca de 300 a 500 ml de água sejam ingeridos 30 minutos antes da atividade física e 200 a 250 ml a cada 20 minutos.";
+    public static final String ESTADO_ALERTA_DESCRIP = "é sugerido que não sejam realizados exercícios físicos e trabalhos ao ar livre entre 10 e 16 horas. Atividades em ambientes fechados também não são recomendadas devido à quantidade de pessoas aglomeradas no mesmo recinto.";
+    public static final String ESTADO_EMERGENCIA_DESCRIP = "ualquer atividade ao ar livre entre 10 e 16 horas deve ser suspensa, assim como as atividades que exijam aglomerações de pessoas em recintos fechados.";
+
     public static final String[] LISTA_CIDADES = {
             "Aracaju - SE"
             , "Belém - PA"

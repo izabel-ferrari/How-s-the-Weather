@@ -32,7 +32,7 @@ public class Formatting {
     }
 
     public static String getHumidity(String humidity) {
-        return "Umidade: " + humidity + " %";
+        return "Umidade: " + humidity + "%";
     }
 
     public static String getPressure(String pressure) {
@@ -41,6 +41,21 @@ public class Formatting {
 
     public static String getWind(String wind) {
         return "Vento: " + wind + " km/h";
+    }
+
+    public static String getEstadoDescripFormatted(int estado, String temp, String umid) {
+        String descrip = "Com a temperatura atual de " + temp + "ºC e umidade relativa do ar de " + umid + "%, ";
+        switch (estado) {
+            case Constants.ESTADO_IDEAL:
+                return (descrip.concat(Constants.ESTADO_IDEAL_DESCRIP));
+            case Constants.ESTADO_ATENCAO:
+                return (descrip.concat(Constants.ESTADO_ATENCAO_DESCRIP));
+            case Constants.ESTADO_ALERTA:
+                return (descrip.concat(Constants.ESTADO_ALERTA_DESCRIP));
+            case Constants.ESTADO_EMERGENCIA:
+                return (descrip.concat(Constants.ESTADO_EMERGENCIA_DESCRIP));
+        }
+        return Constants.ESTADO_INDISPONIVEL_DESCRIP;
     }
 
 
