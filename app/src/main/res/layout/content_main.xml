@@ -24,61 +24,67 @@
 
             <TextView
                 android:id="@+id/text_forecast_today"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/custom_light_blue"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
                 android:text="@string/forecast_today"
+                android:textAllCaps="true"
+                android:textColor="@color/custom_plain_white"
                 android:textSize="20sp" />
 
             <include
                 android:id="@+id/include_cell_today"
                 layout="@layout/cell_today"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/text_forecast_today" />
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/custom_medium_orange" />
 
             <TextView
                 android:id="@+id/text_forecast_tomorrow"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/include_cell_today"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/custom_light_blue"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
                 android:text="@string/forecast_next_days"
+                android:textAllCaps="true"
+                android:textColor="@color/custom_plain_white"
                 android:textSize="20sp" />
 
             <include
                 android:id="@+id/include_cell_tomorrow"
                 layout="@layout/cell_tomorrow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/text_forecast_tomorrow" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="2dp"
+                android:background="@color/custom_medium_orange" />
 
             <include
                 android:id="@+id/include_cell_after_tomorrow"
                 layout="@layout/cell_tomorrow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/include_cell_tomorrow" />
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/custom_medium_orange" />
 
             <TextView
                 android:id="@+id/text_myWeather2.com"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/powered_by" />
         </LinearLayout>
     </ScrollView>

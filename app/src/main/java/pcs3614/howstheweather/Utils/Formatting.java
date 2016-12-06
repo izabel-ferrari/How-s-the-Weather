@@ -36,7 +36,7 @@ public class Formatting {
     }
 
     public static String getPressure(String pressure) {
-        return "Pressão: " + pressure + " mbar";
+        return "Pressão: " + pressure + " hPa";
     }
 
     public static String getWind(String wind) {
