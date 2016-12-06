@@ -11,7 +11,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Weather implements Parcelable{
+import pcs3614.howstheweather.Utils.Formatting;
+
+public class Weather implements Parcelable {
 
     private CurrenWeather currenWeather;
     private List<Forecast> forecastList = new ArrayList<Forecast>();
@@ -35,10 +37,22 @@ public class Weather implements Parcelable{
     }
 
     public CurrenWeather getCurrenWeather() {
+        if (currenWeather == null) {
+            return (new CurrenWeather());
+        }
         return currenWeather;
     }
 
     public List<Forecast> getForecastList() {
+        if (forecastList == null) {
+            List<Forecast> forecastListTemp = new ArrayList<Forecast>();
+            forecastListTemp.add(new Forecast());
+            forecastListTemp.add(new Forecast());
+            this.forecastList = forecastListTemp;
+        } else if (forecastList.size() == 1) {
+            (this.forecastList).add(new Forecast());
+
+        }
         return forecastList;
     }
 

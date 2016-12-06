@@ -20,19 +20,38 @@ public class Wind implements Parcelable {
         windUnit = jsonObject.optString("wind_unit");
     }
 
+    Wind() {
+        this.dir = "-";
+        this.dirDegree = "-";
+        this.speed = "-";
+        this.windUnit = "-";
+    }
+
     public String getDir() {
+        if (dir == null || dir.length() > 4) {
+            return "-";
+        }
         return dir;
     }
 
     public String getDirDegree() {
+        if (dirDegree == null || dirDegree.length() > 4) {
+            return "-";
+        }
         return dirDegree;
     }
 
     public String getSpeed() {
+        if (speed == null || speed.length() > 4) {
+            return "-";
+        }
         return speed;
     }
 
     public String getWindUnit() {
+        if (windUnit == null || windUnit.length() > 4) {
+            return "-";
+        }
         return windUnit;
     }
 

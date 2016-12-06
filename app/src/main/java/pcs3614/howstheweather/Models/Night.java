@@ -19,15 +19,30 @@ public class Night implements Parcelable {
         wind = new Wind(jsonObjectWind);
     }
 
+    Night() {
+        this.weatherCode = "-";
+        this.weatherText = "-";
+        this.wind = (new Wind());
+    }
+
     public String getWeatherCode() {
+        if (weatherCode == null) {
+            return "-999";
+        }
         return weatherCode;
     }
 
     public String getWeatherText() {
+        if (weatherText == null) {
+            return "-";
+        }
         return weatherText;
     }
 
     public Wind getWind() {
+        if (wind == null) {
+            return (new Wind());
+        }
         return wind;
     }
 

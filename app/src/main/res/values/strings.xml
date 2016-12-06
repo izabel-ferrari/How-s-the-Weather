@@ -13,4 +13,7 @@
     <string name="powered_by">Informações disponibilizadas por MyWeather2.com</string>
     <string name="max_day">Máxima durante o dia:</string>
     <string name="min_night">Mínima durante a noite:</string>
+    <string name="amanha">Amanhã</string>
+    <string name="depois_amanha">Depois de amanhã</string>
+    <string name="vivamus_tincidunt">Vivamus tincidunt</string>
 </resources>

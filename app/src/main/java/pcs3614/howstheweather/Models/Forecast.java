@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import org.json.JSONObject;
 
-public class Forecast implements Parcelable{
+public class Forecast implements Parcelable {
 
     private String date;
     private Day day;
@@ -26,27 +26,54 @@ public class Forecast implements Parcelable{
         tempUnit = jsonObject.optString("temp_unit");
     }
 
+    Forecast() {
+        this.date = "-";
+        this.day = new Day();
+        this.dayMaxTemp = "-";
+        this.night = new Night();
+        this.nightMinTemp = "-";
+        this.tempUnit = "-";
+    }
+
     public String getDate() {
+        if (date == null) {
+            return "-";
+        }
         return date;
     }
 
     public Day getDay() {
+        if (day == null) {
+            return (new Day());
+        }
         return day;
     }
 
     public String getDayMaxTemp() {
+        if (dayMaxTemp == null || dayMaxTemp.length() > 2) {
+            return "-";
+        }
         return dayMaxTemp;
     }
 
     public Night getNight() {
+        if (night == null) {
+            return (new Night());
+        }
         return night;
     }
 
     public String getNightMinTemp() {
+        if (nightMinTemp == null || nightMinTemp.length() > 2) {
+            return "-";
+        }
         return nightMinTemp;
     }
 
     public String getTempUnit() {
+        if (tempUnit == null) {
+            return "-";
+        }
         return tempUnit;
     }
 

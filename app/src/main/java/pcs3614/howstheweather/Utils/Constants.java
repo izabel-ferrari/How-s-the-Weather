@@ -1,6 +1,8 @@
 package pcs3614.howstheweather.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,6 +32,36 @@ public class Constants {
     public static final String CIDADE_DEFAULT = "São Paulo - SP";
 
     public static final String BROADCAST_WEATHER = "BROADCAST_WEATHER";
+
+    public static final String[] LISTA_CIDADES = {
+            "Aracaju - SE"
+            , "Belém - PA"
+            , "Belo Horizonte - MG"
+            , "Boa Vista - RR"
+            , "Brasília - DF"
+            , "Campo Grande - MS"
+            , "Cuiabá - MT"
+            , "Curitiba - PR"
+            , "Florianópolis - SC"
+            , "Fortaleza - CE"
+            , "Goiânia - GO"
+            , "João Pessoa - PB"
+            , "Macapá - AP"
+            , "Maceió - AL"
+            , "Manaus - AM"
+            , "Natal - RN"
+            , "Palmas - TO"
+            , "Porto Alegre - RS"
+            , "Porto Velho - RO"
+            , "Recife - PE"
+            , "Rio Branco - AC"
+            , "Rio de Janeiro - RJ"
+            , "Salvador - BA"
+            , "São Luís - MA"
+            , "São Paulo - SP"
+            , "Teresina - PI"
+            , "Vitória - ES"
+    };
 
     public static final Map<String, String> CIDADES;
 

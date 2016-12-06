@@ -1,5 +1,6 @@
 package pcs3614.howstheweather.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,11 +26,12 @@ import pcs3614.howstheweather.WebServices.WebServiceRequest;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private String currentLocation = Constants.CIDADE_DEFAULT;
+    private String cidadeStr;
     private Context context;
     private Weather weather;
     private Forecast forecast;
     ProgressDialog progressDialog;
+    Activity activity = this;
 
     Toolbar toolbar;
     View cell_today, cell_tomorrow, cell_after_tomorrow;
@@ -58,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main);
 
+        cidadeStr = getIntent().getStringExtra("cidade");
+        if (cidadeStr == null) {
+            cidadeStr = Constants.CIDADE_DEFAULT;
+        }
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(currentLocation);
+        toolbar.setTitle(cidadeStr);
         setSupportActionBar(toolbar);
 
         cell_today = findViewById(R.id.include_cell_today);
@@ -90,10 +97,7 @@ public class MainActivity extends AppCompatActivity {
         textTemperatureNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_temperature_night);
         textDescriptionNightAfterTomorrow = (TextView) cell_after_tomorrow.findViewById(R.id.text_description_night);
 
-        WebServiceRequest webServiceRequest = new WebServiceRequest();
-        webServiceRequest.getForecast(context, Constants.CIDADE_DEFAULT);
-
-        progressDialog = ProgressDialog.show(context, null, "Carregando...");
+        getForecast(cidadeStr);
 
     }
 
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            // TODO Colocar ação de mudar cidade
+            startActivity(new Intent(activity, CityListAcitivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -129,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(receiver);
     }
 
+    private void getForecast(String cidade) {
+        WebServiceRequest webServiceRequest = new WebServiceRequest();
+        webServiceRequest.getForecast(context, cidade);
+        progressDialog = ProgressDialog.show(context, null, "Carregando...");
+    }
+
     private void populate() {
         if (weather != null) {
             textHeaderToday.setText(Formatting.getCurrentDate());
@@ -140,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
             textWindToday.setText(Formatting.getWind(weather.getCurrenWeather().getWind().getSpeed()));
 
             forecast = weather.getForecastList().get(0);
-            textHeaderTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            //textHeaderTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            textHeaderTomorrow.setText(R.string.amanha);
             imageWeatherDayTomorrow.setImageResource(Formatting.getDayIcon(forecast.getDay().getWeatherCode()));
             textTemperatureDayTomorrow.setText(Formatting.getTemperature(forecast.getDayMaxTemp()));
             textDescriptionDayTomorrow.setText(Formatting.getDescription(forecast.getDay().getWeatherCode()));
@@ -149,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
             textDescriptionNightTomorrow.setText(Formatting.getDescription(forecast.getNight().getWeatherCode()));
 
             forecast = weather.getForecastList().get(1);
-            textHeaderAfterTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            //textHeaderAfterTomorrow.setText(Formatting.getDate(forecast.getDate()));
+            textHeaderAfterTomorrow.setText(R.string.depois_amanha);
             imageWeatherDayAfterTomorrow.setImageResource(Formatting.getDayIcon(forecast.getDay().getWeatherCode()));
             textTemperatureDayAfterTomorrow.setText(Formatting.getTemperature(forecast.getDayMaxTemp()));
             textDescriptionAfterTomorrow.setText(Formatting.getDescription(forecast.getDay().getWeatherCode()));
