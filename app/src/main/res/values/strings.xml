@@ -5,9 +5,8 @@
     <string name="selecione_cidade">Selecione uma cidade</string>
 
     <string name="lorem_ipsum">Lorem ipsum</string>
-    <string name="nunc_ipsum_risus_porttitor">Nunc ipsum risus porttitor</string>
-    <string name="vivamus_tincidunt">Vivamus tincidunt</string>
-    <string name="phasellus_ante_libero">Phasellus ante libero, finibus sed arcu eu, pretium tincidunt lectus. Sed nec accumsan dui. Phasellus et justo ac est sagittis dictum. Morbi nec leo congue, accumsan lectus quis, varius ex. Duis sodales dolor vitae nulla.</string>
+    <string name="lorem_ipsum_risus">Lorem ipsum risus porttitor</string>
+    <string name="lorem_ipsum_ante_libero">Lorem ipsum ante libero, finibus sed arcu eu, pretium tincidunt lectus. Sed nec accumsan dui. Phasellus et justo ac est sagittis dictum. Morbi nec leo congue, accumsan lectus quis, varius ex. Duis sodales dolor vitae nulla.</string>
 
     <string name="forecast_today">Previsão do tempo para hoje</string>
     <string name="forecast_next_days">Previsão para os próximos dias</string>
@@ -24,4 +23,5 @@
     <string name="wind">Vento: 00 km/h</string>
 
     <string name="image_description">Ilustração das condições do clima</string>
+    <string name="leia_mais">Leia mais...</string>
 </resources>

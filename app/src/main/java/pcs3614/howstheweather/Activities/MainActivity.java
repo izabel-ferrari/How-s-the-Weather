@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageWeatherToday;
 
     LinearLayout layout_estado_atual;
-    TextView estado_atual_header, estado_atual_descrip;
+    TextView leia_mais, estado_atual_header, estado_atual_descrip;
 
     TextView textHeaderTomorrow, textTemperatureDayTomorrow, textDescriptionDayTomorrow, textTemperatureNightTomorrow, textDescriptionNightTomorrow;
     ImageView imageWeatherDayTomorrow, imageWeatherNightTomorrow;
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         textWindToday = (TextView) cell_today.findViewById(R.id.text_wind);
 
         layout_estado_atual = (LinearLayout) cell_today.findViewById(R.id.layout_estado_atual);
+        leia_mais = (TextView) cell_today.findViewById(R.id.text_leia_mais);
         estado_atual_header = (TextView) cell_today.findViewById(R.id.text_estado_atual_header);
         estado_atual_descrip = (TextView) cell_today.findViewById(R.id.text_estado_descrip);
 
@@ -128,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isVisible) {
+                    leia_mais.setVisibility(View.VISIBLE);
                     layout_estado_atual.setVisibility(View.GONE);
                     isVisible = false;
                 } else {
+                    leia_mais.setVisibility(View.GONE);
                     layout_estado_atual.setVisibility(View.VISIBLE);
                     isVisible = true;
                 }
