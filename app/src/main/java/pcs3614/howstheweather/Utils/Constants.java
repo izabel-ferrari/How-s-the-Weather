@@ -25,7 +25,7 @@ public class Constants {
     private static final String WS_UNIT = "kph";
 
     // REQUISIÇÃO
-    public static final String URL = URL_BASE + "uac=" + UAC + "&output=" + OUTPUT + "&temp_unit=" + TEMP_UNIT + "&ws_unit" + WS_UNIT + "&query=";
+    public static final String URL = URL_BASE + "uac=" + UAC + "&output=" + OUTPUT + "&temp_unit=" + TEMP_UNIT + "&ws_unit=" + WS_UNIT + "&query=";
 
     /* ------------------------------------------------------------------------------------------ */
 
